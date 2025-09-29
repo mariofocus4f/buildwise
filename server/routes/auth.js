@@ -77,71 +77,31 @@ router.post('/register', [
 // @desc    Login user
 // @route   POST /api/auth/login
 // @access  Public
-router.post('/login', [
-  body('email').isEmail().normalizeEmail().withMessage('Please provide a valid email'),
-  body('password').notEmpty().withMessage('Password is required')
-], async (req, res) => {
+router.post('/login', async (req, res) => {
   try {
-    // Check for validation errors
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      return res.status(400).json({
-        success: false,
-        message: 'Validation failed',
-        errors: errors.array()
-      });
-    }
-
     const { email, password } = req.body;
 
-    // Check for user and include password for comparison
-    const user = await User.findOne({ email }).select('+password');
-
-    if (!user) {
-      return res.status(401).json({
-        success: false,
-        message: 'Invalid credentials'
-      });
-    }
-
-    // Check if user is active
-    if (!user.isActive) {
-      return res.status(401).json({
-        success: false,
-        message: 'Account is deactivated'
-      });
-    }
-
-    // Check password
-    const isMatch = await user.matchPassword(password);
-
-    if (!isMatch) {
-      return res.status(401).json({
-        success: false,
-        message: 'Invalid credentials'
-      });
-    }
-
-    // Update last login
-    await user.updateLastLogin();
-
-    // Generate JWT token
-    const token = user.getSignedJwtToken();
-
+    // DEMO MODE - Accept any credentials and return mock user
+    console.log('🎭 DEMO MODE: Login attempt with', email);
+    
+    // Create a mock JWT token (works without JWT_SECRET in demo mode)
+    const mockToken = 'demo-token-' + Date.now();
+    
+    // Return mock user - always successful login
     res.json({
       success: true,
-      message: 'Login successful',
-      token,
+      message: 'Login successful (DEMO MODE)',
+      token: mockToken,
       user: {
-        id: user._id,
-        firstName: user.firstName,
-        lastName: user.lastName,
-        email: user.email,
-        role: user.role,
-        company: user.company,
-        phone: user.phone,
-        avatar: user.avatar,
-        lastLogin: user.lastLogin
+        id: 'demo-user-123',
+        firstName: 'Demo',
+        lastName: 'User',
+        email: email || 'demo@buildwise.pl',
+        role: 'admin',
+        company: 'BuildWise Demo',
+        phone: '+48 123 456 789',
+        avatar: '',
+        lastLogin: new Date()
       }
     });
   } catch (error) {

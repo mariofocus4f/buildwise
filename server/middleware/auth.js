@@ -3,42 +3,23 @@ const User = require('../models/User');
 
 // Protect routes - verify JWT token
 const protect = async (req, res, next) => {
-  let token;
-
-  if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
-    try {
-      // Get token from header
-      token = req.headers.authorization.split(' ')[1];
-
-      // Verify token
-      const decoded = jwt.verify(token, process.env.JWT_SECRET);
-
-      // Get user from token
-      req.user = await User.findById(decoded.id).select('-password');
-
-      if (!req.user) {
-        return res.status(401).json({
-          success: false,
-          message: 'Not authorized, user not found'
-        });
-      }
-
-      next();
-    } catch (error) {
-      console.error('Token verification error:', error);
-      return res.status(401).json({
-        success: false,
-        message: 'Not authorized, token failed'
-      });
-    }
-  }
-
-  if (!token) {
-    return res.status(401).json({
-      success: false,
-      message: 'Not authorized, no token'
-    });
-  }
+  // DEMO MODE - Always allow access with mock user
+  console.log('🎭 DEMO MODE: Auth bypassed');
+  
+  // Create mock user object
+  req.user = {
+    _id: 'demo-user-123',
+    id: 'demo-user-123',
+    firstName: 'Demo',
+    lastName: 'User',
+    email: 'demo@buildwise.pl',
+    role: 'admin',
+    company: 'BuildWise Demo',
+    phone: '+48 123 456 789',
+    isActive: true
+  };
+  
+  next();
 };
 
 // Grant access to specific roles
