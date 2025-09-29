@@ -17,10 +17,6 @@ import {
   Avatar,
   Divider,
   Alert,
-  List,
-  ListItem,
-  ListItemIcon,
-  ListItemText,
 } from '@mui/material';
 import {
   Add as AddIcon,
@@ -29,7 +25,6 @@ import {
   CheckCircle as CheckCircleIcon,
   RadioButtonUnchecked as PendingIcon,
   Circle as InProgressIcon,
-  Event as EventIcon,
   Flag as FlagIcon,
   Warning as WarningIcon,
   TrendingUp as TrendingUpIcon,
