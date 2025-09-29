@@ -21,7 +21,6 @@ import {
   Tab,
 } from '@mui/material';
 import {
-  Add as AddIcon,
   CloudUpload as UploadIcon,
   Search as SearchIcon,
   Description as DocumentIcon,

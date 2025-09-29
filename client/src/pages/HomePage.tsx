@@ -30,14 +30,9 @@ import {
   Star as StarIcon,
   ArrowForward as ArrowForwardIcon,
   Smartphone as SmartphoneIcon,
-  Cloud as CloudIcon,
   Security as SecurityIcon,
-  Speed as SpeedIcon,
   TrendingUp as TrendingUpIcon,
-  Group as GroupIcon,
   Email as EmailIcon,
-  Phone as PhoneIcon,
-  LocationOn as LocationIcon,
 } from '@mui/icons-material';
 
 const HomePage: React.FC = () => {

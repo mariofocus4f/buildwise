@@ -9,8 +9,6 @@ import {
   Avatar,
   Box,
   Badge,
-  useTheme,
-  useMediaQuery,
 } from '@mui/material';
 import {
   Menu as MenuIcon,
@@ -29,7 +27,6 @@ interface HeaderProps {
 const Header: React.FC<HeaderProps> = ({ onMenuClick }) => {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
-  const theme = useTheme();
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [notificationAnchor, setNotificationAnchor] = useState<null | HTMLElement>(null);

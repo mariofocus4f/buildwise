@@ -29,7 +29,6 @@ import {
   Add as AddIcon,
   Edit as EditIcon,
   Delete as DeleteIcon,
-  Warning as WarningIcon,
   TrendingUp as TrendingUpIcon,
   TrendingDown as TrendingDownIcon,
   Receipt as ReceiptIcon,
@@ -57,7 +56,6 @@ interface Expense {
 
 const Budget: React.FC = () => {
   const [tabValue, setTabValue] = useState(0);
-  const [openDialog, setOpenDialog] = useState(false);
   const [openExpenseDialog, setOpenExpenseDialog] = useState(false);
 
   // Mock data - w rzeczywistości pobierane z API
@@ -66,7 +64,7 @@ const Budget: React.FC = () => {
   const totalRemaining = totalBudget - totalSpent;
   const budgetProgress = (totalSpent / totalBudget) * 100;
 
-  const [budgetItems, setBudgetItems] = useState<BudgetItem[]>([
+  const [budgetItems] = useState<BudgetItem[]>([
     {
       id: '1',
       category: 'Fundamenty',

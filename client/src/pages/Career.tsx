@@ -11,7 +11,6 @@ import {
 } from '@mui/material';
 import Footer from '../components/Footer';
 import {
-  WorkOutline as WorkIcon,
   LocationOn as LocationIcon,
   Schedule as ScheduleIcon,
   ArrowForward as ArrowForwardIcon,

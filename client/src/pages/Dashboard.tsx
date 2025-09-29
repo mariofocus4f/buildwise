@@ -12,7 +12,6 @@ import {
   Chip,
   LinearProgress,
   Avatar,
-  Grid,
   Button,
 } from '@mui/material';
 import {
@@ -24,7 +23,6 @@ import {
   AccountBalance as BudgetIcon,
   Group as GroupIcon,
   Description as DocumentIcon,
-  TrendingUp as TrendingUpIcon,
   ArrowForward as ArrowForwardIcon,
 } from '@mui/icons-material';
 import { useQuery } from '@tanstack/react-query';

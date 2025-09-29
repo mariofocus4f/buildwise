@@ -12,7 +12,6 @@ import {
   TextField,
   InputAdornment,
   Grid,
-  IconButton,
   Dialog,
   DialogTitle,
   DialogContent,
@@ -37,7 +36,6 @@ import {
   CheckCircle as CheckCircleIcon,
   Warning as WarningIcon,
   Message as MessageIcon,
-  Description as DescriptionIcon,
 } from '@mui/icons-material';
 
 interface Contractor {
