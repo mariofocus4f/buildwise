@@ -14,8 +14,6 @@ import {
 } from '@mui/material';
 import {
   Dashboard as DashboardIcon,
-  Construction as ConstructionIcon,
-  Assignment as AssignmentIcon,
   Description as DescriptionIcon,
   People as PeopleIcon,
   Settings as SettingsIcon,
