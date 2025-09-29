@@ -1,6 +1,13 @@
 const mongoose = require('mongoose');
 
 const connectDB = async () => {
+  // Skip database connection if MONGODB_URI is not set
+  if (!process.env.MONGODB_URI) {
+    console.log('⚠️ MONGODB_URI not set - running without database');
+    console.log('⚠️ Add MONGODB_URI environment variable to enable database features');
+    return;
+  }
+
   try {
     const conn = await mongoose.connect(process.env.MONGODB_URI, {
       useNewUrlParser: true,
@@ -10,7 +17,8 @@ const connectDB = async () => {
     console.log(`📦 MongoDB Connected: ${conn.connection.host}`);
   } catch (error) {
     console.error('❌ Database connection error:', error.message);
-    process.exit(1);
+    console.error('⚠️ Continuing without database - some features may not work');
+    // Don't exit - allow app to run without database
   }
 };
 
