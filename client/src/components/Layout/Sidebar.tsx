@@ -21,9 +21,13 @@ import {
   Settings as SettingsIcon,
   Analytics as AnalyticsIcon,
   Home as HomeIcon,
+  AccountBalance as BudgetIcon,
+  Timeline as TimelineIcon,
+  PersonAdd as ContractorsIcon,
 } from '@mui/icons-material';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
+import { useUserType } from '../../contexts/UserTypeContext';
 
 interface SidebarProps {
   open: boolean;
@@ -36,24 +40,31 @@ const Sidebar: React.FC<SidebarProps> = ({ open, onClose }) => {
   const navigate = useNavigate();
   const location = useLocation();
   const { user } = useAuth();
+  const { userType } = useUserType();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
-  const menuItems = [
+  // Menu dla Kierownika budowy - pełne funkcje
+  const managerMenuItems = [
     {
       text: 'Dashboard',
       icon: <DashboardIcon />,
       path: '/dashboard',
     },
     {
-      text: 'Projekty',
-      icon: <ConstructionIcon />,
-      path: '/projects',
+      text: 'Harmonogram',
+      icon: <TimelineIcon />,
+      path: '/timeline',
     },
     {
-      text: 'Zadania',
-      icon: <AssignmentIcon />,
-      path: '/tasks',
+      text: 'Budżet',
+      icon: <BudgetIcon />,
+      path: '/budget',
+    },
+    {
+      text: 'Wykonawcy',
+      icon: <ContractorsIcon />,
+      path: '/contractors',
     },
     {
       text: 'Dokumenty',
@@ -66,6 +77,33 @@ const Sidebar: React.FC<SidebarProps> = ({ open, onClose }) => {
       path: '/analytics',
     },
   ];
+
+  // Menu dla Inwestora - uproszczone
+  const investorMenuItems = [
+    {
+      text: 'Dashboard',
+      icon: <DashboardIcon />,
+      path: '/dashboard',
+    },
+    {
+      text: 'Timeline projektu',
+      icon: <TimelineIcon />,
+      path: '/timeline',
+    },
+    {
+      text: 'Budżet',
+      icon: <BudgetIcon />,
+      path: '/budget',
+    },
+    {
+      text: 'Dokumenty',
+      icon: <DescriptionIcon />,
+      path: '/documents',
+    },
+  ];
+
+  // Wybierz odpowiednie menu
+  const menuItems = userType === 'manager' ? managerMenuItems : investorMenuItems;
 
   // Admin only menu items
   const adminMenuItems = [
@@ -197,9 +235,19 @@ const Sidebar: React.FC<SidebarProps> = ({ open, onClose }) => {
           {user?.firstName} {user?.lastName}
         </Typography>
         <Typography variant="caption" color="text.secondary" noWrap>
-          {user?.role === 'admin' ? 'Administrator' : 
-           user?.role === 'manager' ? 'Menedżer' : 'Użytkownik'}
+          {user?.company || 'BuildWise'}
         </Typography>
+        <Box sx={{ 
+          mt: 1, 
+          px: 1, 
+          py: 0.5, 
+          bgcolor: userType === 'manager' ? '#FF6B35' : '#FFA726',
+          borderRadius: 1,
+        }}>
+          <Typography variant="caption" sx={{ color: 'white', fontWeight: 600 }}>
+            {userType === 'manager' ? '👷 Kierownik budowy' : '🏠 Inwestor'}
+          </Typography>
+        </Box>
       </Box>
     </Box>
   );

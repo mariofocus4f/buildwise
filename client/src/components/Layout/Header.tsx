@@ -9,6 +9,9 @@ import {
   Avatar,
   Box,
   Badge,
+  Switch,
+  Tooltip,
+  Chip,
 } from '@mui/material';
 import {
   Menu as MenuIcon,
@@ -16,8 +19,11 @@ import {
   AccountCircle,
   Settings,
   Logout,
+  Engineering as ManagerIcon,
+  Home as InvestorIcon,
 } from '@mui/icons-material';
 import { useAuth } from '../../contexts/AuthContext';
+import { useUserType } from '../../contexts/UserTypeContext';
 import { useNavigate } from 'react-router-dom';
 
 interface HeaderProps {
@@ -26,6 +32,7 @@ interface HeaderProps {
 
 const Header: React.FC<HeaderProps> = ({ onMenuClick }) => {
   const { user, logout } = useAuth();
+  const { userType, toggleUserType } = useUserType();
   const navigate = useNavigate();
 
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -93,7 +100,47 @@ const Header: React.FC<HeaderProps> = ({ onMenuClick }) => {
           BuildWise
         </Typography>
 
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+        <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+          {/* User Type Switch */}
+          <Box sx={{ 
+            display: 'flex', 
+            alignItems: 'center', 
+            gap: 1,
+            bgcolor: 'rgba(255,255,255,0.1)',
+            borderRadius: 2,
+            px: 2,
+            py: 0.5,
+          }}>
+            <Tooltip title="Inwestor indywidualny">
+              <InvestorIcon sx={{ color: userType === 'investor' ? '#FFA726' : '#9E9E9E' }} />
+            </Tooltip>
+            <Switch
+              checked={userType === 'manager'}
+              onChange={toggleUserType}
+              sx={{
+                '& .MuiSwitch-thumb': {
+                  bgcolor: userType === 'manager' ? '#FF6B35' : '#FFA726',
+                },
+                '& .MuiSwitch-track': {
+                  bgcolor: '#fff',
+                },
+              }}
+            />
+            <Tooltip title="Kierownik budowy">
+              <ManagerIcon sx={{ color: userType === 'manager' ? '#FF6B35' : '#9E9E9E' }} />
+            </Tooltip>
+          </Box>
+
+          <Chip 
+            label={userType === 'manager' ? 'Kierownik' : 'Inwestor'}
+            size="small"
+            sx={{ 
+              bgcolor: userType === 'manager' ? '#FF6B35' : '#FFA726',
+              color: 'white',
+              fontWeight: 600,
+            }}
+          />
+
           {/* Notifications */}
           <IconButton
             size="large"
